@@ -6,9 +6,12 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 import javax.swing.JPanel;
+
+import util.PointUtils;
 
 public class Camera extends JPanel {
 	
@@ -65,18 +68,28 @@ public class Camera extends JPanel {
 		for(Shape3D shape: shapes) {
 			
 			double points[][] = shape.getPoints();
+			double[] temp1 = new double[3],
+					 temp2 = new double[3];
 			double planeDistance = getWidth()/(2*Math.tan(Math.toRadians(fov/2)));
 			
 			g2.setColor(Color.BLACK);
 			for(int[] edge: shape.getEdges()) {
-				if(Math.min(points[edge[0]][2]-point[2], points[edge[1]][2]-point[2]) > 0) {
-					int p1x = (int)((points[edge[0]][0]-point[0])*(planeDistance/(points[edge[0]][2]-point[2])));
-					int p1y = (int)((points[edge[0]][1]-point[1])*(planeDistance/(points[edge[0]][2]-point[2])));
-					int p2x = (int)((points[edge[1]][0]-point[0])*(planeDistance/(points[edge[1]][2]-point[2])));
-					int p2y = (int)((points[edge[1]][1]-point[1])*(planeDistance/(points[edge[1]][2]-point[2])));
+					System.arraycopy(points[edge[0]], 0, temp1, 0, 3);
+					PointUtils.translate(temp1, -point[0], -point[1], -point[2]);
+					PointUtils.rotate(temp1, yaw, pitch, roll);
 					
-					g2.drawLine(p1x, p1y, p2x, p2y);
-				}
+					System.arraycopy(points[edge[1]], 0, temp2, 0, 3);
+					PointUtils.translate(temp2, -point[0], -point[1], -point[2]);
+					PointUtils.rotate(temp2, yaw, pitch, roll);
+					
+					if(Math.min(temp1[2], temp2[2]) > 0) {
+						int p1x = (int)(temp1[0]*(planeDistance/temp1[2]));
+						int p1y = (int)(temp1[1]*(planeDistance/temp1[2]));
+						int p2x = (int)(temp2[0]*(planeDistance/temp2[2]));
+						int p2y = (int)(temp2[1]*(planeDistance/temp2[2]));
+						
+						g2.drawLine(p1x, p1y, p2x, p2y);
+					}
 			}
 		}
 	}

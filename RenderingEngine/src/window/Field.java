@@ -97,13 +97,14 @@ public class Field extends JPanel implements Runnable {
 						break;
 				}
 		}
-		c1.rotate(Math.PI/400, 0, 0);
-		c1.rotate(0, Math.PI/400, 0);
-		c1.rotate(0, 0, Math.PI/400);
-		
-		c2.rotate(0, 0, Math.PI/400);
-		c2.rotate(0, Math.PI/400, 0);
-		c2.rotate(Math.PI/400, 0, 0);
+		c1.rotateYaw(Math.PI/40);
+		//c1.rotate(Math.PI/40, 0, 0);
+		//c1.rotate(0, Math.PI/400, 0);
+		//c1.rotate(0, 0, Math.PI/10);
+		//
+		//c2.rotate(0, 0, Math.PI/400);
+		//c2.rotate(0, Math.PI/400, 0);
+		c2.rotate(Math.PI/40, 0, 0);
 	}
 	
 	@Override
