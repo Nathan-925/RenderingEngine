@@ -29,40 +29,8 @@ public class Shape3D {
 	}
 	
 	public void rotate(double yaw, double pitch, double roll, double[] pivot) {
-		translate(-pivot[0], -pivot[1], -pivot[2]);
 		for(double[] point: points)
-			PointUtils.rotate(point, yaw, pitch, roll);
-		translate(pivot[0], pivot[1], pivot[2]);
-	}
-	
-	public void rotateYaw(double angle) {
-		double[] center = getCenter();
-		translate(-center[0], -center[1], -center[2]);
-		for(double[] point: points) {
-			double dx = point[0], dz = point[2];
-			double cos = Math.cos(angle), sin = Math.sin(angle);
-			point[0] = dx*cos-dz*sin;
-			point[2] = dz*cos+dx*sin;
-		}
-		translate(center[0], center[1], center[2]);
-	}
-	
-	public void rotatePitch(double angle, double centerY, double centerZ) {
-		for(double[] point: points) {
-			double dy = point[1]-centerY, dz = point[2]-centerZ;
-			double cos = Math.cos(angle), sin = Math.sin(angle);
-			point[1] = dy*cos-dz*sin+centerY;
-			point[2] = dz*cos+dy*sin+centerZ;
-		}
-	}
-	
-	public void rotateRoll(double angle, double centerX, double centerY) {
-		for(double[] point: points) {
-			double dx = point[0]-centerX, dy = point[1]-centerY;
-			double cos = Math.cos(angle), sin = Math.sin(angle);
-			point[0] = dx*cos-dy*sin+centerX;
-			point[1] = dy*cos+dx*sin+centerY;
-		}
+			PointUtils.rotate(point, yaw, pitch, roll, pivot);
 	}
 	
 	public void rotate(double yaw, double pitch, double roll) {
