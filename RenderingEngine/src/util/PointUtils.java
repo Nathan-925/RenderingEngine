@@ -34,4 +34,15 @@ public class PointUtils {
 		point[2] += z;
 	}
 	
+	public static void scale(double[] point, double factor) {
+		scale(point, factor, new double[] {0, 0, 0});
+	}
+	
+	public static void scale(double[] point, double factor, double[] pivot) {
+		double dx = point[0]-pivot[0], dy = point[1]-pivot[1], dz = point[2]-pivot[2];
+		
+		point[0] = dx*factor+pivot[0];
+		point[1] = dy*factor+pivot[1];
+		point[2] = dz*factor+pivot[2];
+	}
 }

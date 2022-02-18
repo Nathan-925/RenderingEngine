@@ -21,9 +21,7 @@ public class Shape3D {
 	
 	public void translate(double x, double y, double z) {
 		for(double[] point: points) {
-			point[0] += x;
-			point[1] += y;
-			point[2] += z;
+			PointUtils.translate(point, x, y, z);
 		}
 	}
 	
@@ -37,14 +35,12 @@ public class Shape3D {
 	}
 	
 	public void scale(double factor) {
-		double center[] = getCenter();
-		for(double[] point: points) {
-			for(int i = 0; i < point.length; i++) {
-				point[i] -= center[i];
-				point[i] *= factor;
-				point[i] += factor;
-			}
-		}
+		scale(factor, getCenter());
+	}
+	
+	public void scale(double factor, double[] pivot) {
+		for(double[] point: points)
+			PointUtils.scale(point, factor, pivot);
 	}
 	
 	public double[] getCenter() {
