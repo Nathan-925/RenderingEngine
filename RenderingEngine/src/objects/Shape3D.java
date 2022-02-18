@@ -25,7 +25,6 @@ public class Shape3D {
 			point[1] += y;
 			point[2] += z;
 		}
-			//PointUtils.translate(point, x, y, z);
 	}
 	
 	public void rotate(double yaw, double pitch, double roll, double[] pivot) {
