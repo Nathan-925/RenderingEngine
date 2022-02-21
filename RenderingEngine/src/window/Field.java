@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import objects.Camera;
 import objects.Cube;
+import objects.Pyramid;
 
 public class Field extends JPanel implements Runnable {
 
