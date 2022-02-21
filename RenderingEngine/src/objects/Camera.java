@@ -41,9 +41,7 @@ public class Camera extends JPanel {
 	}
 	
 	public void move(double x, double y, double z) {
-		point[0] += x;
-		point[1] += y;
-		point[2] += z;
+		PointUtils.translate(point, z*Math.sin(yaw)+x*Math.cos(yaw), y, z*Math.cos(yaw)-x*Math.sin(yaw));
 	}
 	
 	public void rotate(double yaw, double pitch, double roll) {
