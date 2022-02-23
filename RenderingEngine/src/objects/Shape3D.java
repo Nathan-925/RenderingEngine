@@ -5,18 +5,18 @@ import util.PointUtils;
 public class Shape3D {
 	
 	private double[][] points;
-	private int[][] edges;
+	private int[][] faces;
 	
-	public Shape3D(double[][] points, int[][] edges) {
+	public Shape3D(double[][] points, int[][] faces) {
 		for(double[] point: points)
 			if(point.length != 3)
 				throw new IllegalArgumentException("Each point must be 3 double values");
-		for(int[] edge: edges)
-			if(edge.length != 2 || edge[0]<0 || edge[0]>=points.length || edge[1]<0 || edge[1]>=points.length)
-				throw new IllegalArgumentException("Each edge must be 2 ints with an index of a point");
+		for(int[] face: faces)
+			if(face.length < 2)
+				throw new IllegalArgumentException("Each edge must be at least 2 ints with an index of a point");
 		
 		this.points = points;
-		this.edges = edges;
+		this.faces = faces;
 	}
 	
 	public void translate(double x, double y, double z) {
@@ -58,8 +58,8 @@ public class Shape3D {
 		return points;
 	}
 	
-	public int[][] getEdges(){
-		return edges;
+	public int[][] getFaces(){
+		return faces;
 	}
 	
 }

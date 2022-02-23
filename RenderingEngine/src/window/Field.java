@@ -24,10 +24,11 @@ public class Field extends JPanel implements Runnable {
 		setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		setBackground(Color.CYAN);
 		camera = new Camera();
-		c1 = new Cube(new double[] {100, 100, 800}, 200);
-		c2 = new Cube(new double[] {100, 200, 400}, 100);
+		c1 = new Cube(new double[] {100, 100, 800}, 200, false);
+		c2 = new Cube(new double[] {100, 200, 400}, 100, true);
 		camera.addShape(c1);
 		camera.addShape(c2);
+		camera.addShape(new Pyramid(new double[] {200, 0, 900}, 4, Math.hypot(100, 100), 100, Math.PI/4));
 		add(camera);
 		
 		keys = new HashMap<>();
