@@ -28,7 +28,7 @@ public class Field extends JPanel implements Runnable {
 		c2 = new Cube(new double[] {100, 200, 400}, 100, true);
 		camera.addShape(c1);
 		camera.addShape(c2);
-		camera.addShape(new Pyramid(new double[] {200, 0, 900}, 4, Math.hypot(100, 100), 100, Math.PI/4));
+		camera.addShape(new Pyramid(new double[] {200, 0, 900}, 4, Math.hypot(100, 100), 100, Math.PI/4, true));
 		add(camera);
 		
 		keys = new HashMap<>();

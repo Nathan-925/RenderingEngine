@@ -22,8 +22,16 @@ public class Pyramid extends Shape3D {
 		return edges;
 	}
 	
-	public Pyramid(double[] point, int sides, double baseRadius, double height, double angle) {
-		super(generatePoints(point, sides, baseRadius, height, angle), generateEdges(sides));
+	private static int[][] generateFaces(int sides){
+		int[][] edges = new int[sides][];
+		for(int i = 0; i < sides; i++) {
+			edges[i] = new int[] {0, i+1, (i+1)%(sides)+1};
+		}
+		return edges;
+	}
+	
+	public Pyramid(double[] point, int sides, double baseRadius, double height, double angle, boolean filled) {
+		super(generatePoints(point, sides, baseRadius, height, angle), filled ? generateFaces(sides) : generateEdges(sides));
 	}
 	
 }
