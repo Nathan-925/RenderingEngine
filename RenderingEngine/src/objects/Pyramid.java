@@ -1,6 +1,6 @@
 package objects;
 
-import java.util.Arrays;
+import java.awt.Color;
 
 public class Pyramid extends Shape3D {
 	
@@ -33,8 +33,9 @@ public class Pyramid extends Shape3D {
 		return edges;
 	}
 	
-	public Pyramid(double[] point, int sides, double baseRadius, double height, double angle, boolean filled) {
-		super(generatePoints(point, sides, baseRadius, height, angle), filled ? generateFaces(sides) : generateEdges(sides));
+	public Pyramid(double[] point, int sides, double baseRadius, double height, double angle, Color color, boolean filled) {
+		super(generatePoints(point, sides, baseRadius, height, angle), filled ? generateFaces(sides) : generateEdges(sides), color);
+		System.out.println(color);
 	}
 	
 }

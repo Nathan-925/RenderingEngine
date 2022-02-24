@@ -1,13 +1,16 @@
 package objects;
 
+import java.awt.Color;
+
 import util.PointUtils;
 
 public class Shape3D {
 	
 	private double[][] points;
 	private int[][] faces;
+	private Color color;
 	
-	public Shape3D(double[][] points, int[][] faces) {
+	public Shape3D(double[][] points, int[][] faces, Color color) {
 		for(double[] point: points)
 			if(point.length != 3)
 				throw new IllegalArgumentException("Each point must be 3 double values");
@@ -17,6 +20,7 @@ public class Shape3D {
 		
 		this.points = points;
 		this.faces = faces;
+		this.color = color;
 	}
 	
 	public void translate(double x, double y, double z) {
@@ -60,6 +64,10 @@ public class Shape3D {
 	
 	public int[][] getFaces(){
 		return faces;
+	}
+	
+	public Color getColor() {
+		return color;
 	}
 	
 }

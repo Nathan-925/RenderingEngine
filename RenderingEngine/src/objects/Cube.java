@@ -1,8 +1,10 @@
 package objects;
 
+import java.awt.Color;
+
 public class Cube extends Shape3D {
 
-	public Cube(double[] point, double size, boolean filled) {
+	public Cube(double[] point, double size, Color color, boolean filled) {
 		super(new double[][] {{point[0], point[1], point[2]}, {point[0], point[1], point[2]+size}, {point[0], point[1]+size, point[2]}, {point[0], point[1]+size, point[2]+size},
 							  {point[0]+size, point[1], point[2]}, {point[0]+size, point[1], point[2]+size}, {point[0]+size, point[1]+size, point[2]}, {point[0]+size, point[1]+size, point[2]+size}},
 			  filled ?
@@ -20,9 +22,8 @@ public class Cube extends Shape3D {
 						   {3, 3}, {3, 7},
 						   {4, 5}, {4, 6},
 						   {5, 7},
-						   {6, 7}});
-				
-				
+						   {6, 7}},
+			  color);
 	}
 	
 }
