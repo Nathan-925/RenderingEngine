@@ -19,8 +19,6 @@ public class Pyramid extends Shape3D {
 			edges[i*2] = new int[] {0, i+1};
 			edges[i*2+1] = new int[] {i+1, (i+1)%(sides)+1};
 		}
-		for(int[] e: edges)
-			System.out.println(Arrays.toString(e));
 		return edges;
 	}
 	

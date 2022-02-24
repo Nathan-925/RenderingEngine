@@ -13,12 +13,14 @@ import javax.swing.JPanel;
 import objects.Camera;
 import objects.Cube;
 import objects.Pyramid;
+import objects.Sphere;
 
 public class Field extends JPanel implements Runnable {
 
 	private Camera camera;
 	private HashMap<Integer, Boolean> keys;
 	Cube c1, c2;
+	Sphere sph;
 	
 	public Field() {
 		setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
@@ -28,6 +30,17 @@ public class Field extends JPanel implements Runnable {
 		c2 = new Cube(new double[] {100, 200, 400}, 100);
 		camera.addShape(c1);
 		camera.addShape(c2);
+		camera.addShape(new Cube(new double[] {100, 100, 750}, 50));
+		camera.addShape(new Cube(new double[] {100, 150, 750}, 50));
+		camera.addShape(new Cube(new double[] {100, 200, 750}, 50));
+		camera.addShape(new Cube(new double[] {100, 250, 750}, 50));
+		camera.addShape(new Pyramid(new double[] {-200, 100, 400}, 6, 100, 200));
+		//camera.addShape(new Sphere(new double[] {0, 0, 0}, 6, 100));
+		//camera.addShape(new Sphere(new double[] {-300, 0, 0}, 4, 100));
+		//camera.addShape(new Sphere(new double[] {-600, 0, 0}, 10, 100));
+		
+		sph = new Sphere(new double[] {200, 200, 900}, 25, 100);
+		camera.addShape(sph);
 		add(camera);
 		
 		keys = new HashMap<>();
@@ -91,10 +104,10 @@ public class Field extends JPanel implements Runnable {
 						camera.rotate(0, Math.PI/100, 0);
 						break;
 					case KeyEvent.VK_Q:
-						camera.rotate(0, 0, -Math.PI/100);
+						camera.rotate(0, 0, Math.PI/100);
 						break;
 					case KeyEvent.VK_E:
-						camera.rotate(0, 0, Math.PI/100);
+						camera.rotate(0, 0, -Math.PI/100);
 						break;
 					case KeyEvent.VK_O:
 						camera.setFOV(fov--);
@@ -111,6 +124,8 @@ public class Field extends JPanel implements Runnable {
 		//c2.rotate(0, 0, Math.PI/400);
 		//c2.rotate(0, Math.PI/400, 0);
 		//c2.rotate(Math.PI/400, 0, 0);
+		
+		sph.rotate(Math.PI/500, Math.PI/500, Math.PI/500);
 	}
 	
 	@Override
