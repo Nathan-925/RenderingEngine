@@ -38,6 +38,10 @@ public class Field extends JPanel implements Runnable {
 			public double getIntensity() {
 				return 10000;
 			}
+			@Override
+			public Color getColor() {
+				return Color.WHITE;
+			}
 		});
 		c1 = new Cube(new double[] {100, 100, 800}, 200, Color.BLUE, false);
 		c2 = new Cube(new double[] {100, 200, 400}, 100, Color.GREEN, true);
