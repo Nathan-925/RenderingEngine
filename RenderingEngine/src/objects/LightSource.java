@@ -2,12 +2,32 @@ package objects;
 
 import java.awt.Color;
 
-public interface LightSource {
+public class LightSource {
 	
-	public double[] getPosition();
+	private double[] point;
+	private double intensity;
+	private Color color;
 	
-	public double getIntensity();
+	public LightSource(double[] point, double intensity, Color color) {
+		this.point = point;
+		this.intensity = intensity;
+		this.color = color;
+	}
 	
-	public Color getColor();
+	public Color applyLight(double[] vec, Color ployColor) {
+		
+	}
+	
+	public double[] getPosition() {
+		return point;
+	}
+	
+	public double getIntensity() {
+		return intensity;
+	}
+	
+	public Color getColor() {
+		return color;
+	}
 	
 }

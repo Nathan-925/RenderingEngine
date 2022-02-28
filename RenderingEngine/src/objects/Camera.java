@@ -89,15 +89,6 @@ public class Camera extends JPanel {
 					int xArr[] = Arrays.stream(temp).mapToInt(n -> (int)(n[0]*(planeDistance/n[2]))).toArray();
 					int yArr[] = Arrays.stream(temp).mapToInt(n -> (int)(n[1]*(planeDistance/n[2]))).toArray();
 					
-					double red = 0, green = 0, blue = 0;
-					for(LightSource light: lights) {
-						red += light.getIntensity()/Math.pow(PointUtils.distance(center, light.getPosition()), 2);
-						green += light.getIntensity()/Math.pow(PointUtils.distance(center, light.getPosition()), 2);
-						blue += light.getIntensity()/Math.pow(PointUtils.distance(center, light.getPosition()), 2);
-					}
-					//System.out.printf("%f %f %f%n", red, green, blue);
-					//System.out.println(new Color((int)Math.min(255, red*c.getRed()), (int)Math.min(255, green*c.getGreen()), (int)Math.min(255, blue*c.getBlue())));
-					g2.setColor(new Color((int)Math.min(255, red*c.getRed()), (int)Math.min(255, green*c.getGreen()), (int)Math.min(255, blue*c.getBlue())));
 					
 					if(xArr.length > 2)
 						g.fillPolygon(xArr, yArr, xArr.length);
