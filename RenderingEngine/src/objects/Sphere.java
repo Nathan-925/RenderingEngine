@@ -1,6 +1,6 @@
 package objects;
 
-import java.util.Arrays;
+import java.awt.Color;
 
 public class Sphere extends Shape3D {
 
@@ -23,13 +23,24 @@ public class Sphere extends Shape3D {
 				edges[i*detail*2+j] = new int[] {i*detail+j, i*detail+(j+1)%detail};
 			if(i < detail-1)
 				for(int j = 0; j < detail; j++)
-					edges[i*detail*2+j+detail] = new int[] {i*detail+j, ((i+1)*detail+j)%(detail*detail)};
+					edges[i*detail*2+j+detail] = new int[] {i*detail+j, (i+1)*detail+j};
+		}
+		return edges;
+	}
+	private static int[][] generateFaces(int detail){
+		int edges[][] = new int[detail*detail*2-detail][];
+		for(int i = 0; i < detail; i++) {
+			for(int j = 0; j < detail; j++)
+				edges[i*detail*2+j] = new int[] {i*detail+j, i*detail+(j+1)%detail};
+			if(i < detail-1)
+				for(int j = 0; j < detail; j++)
+					edges[i*detail*2+j+detail] = new int[] {i*detail+j, i*detail+(j+1)%detail, (i+1)*detail+(j+1)%detail, (i+1)*detail+j};
 		}
 		return edges;
 	}
 	
-	public Sphere(double[] point, int detail, double radius) {
-		super(generatePoints(point, detail, radius), generateEdges(detail));
+	public Sphere(double[] point, int detail, double radius, Color color, boolean filled) {
+		super(generatePoints(point, detail, radius), filled ? generateFaces(detail) : generateEdges(detail), color);
 	}
 	
 }

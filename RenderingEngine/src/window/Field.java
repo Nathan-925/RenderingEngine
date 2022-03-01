@@ -31,22 +31,22 @@ public class Field extends JPanel implements Runnable {
 		setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		setBackground(Color.CYAN);
 		camera = new Camera();
-		lpnt = new double[] {0, 500, 400};
+		lpnt = new double[] {0, 100, 0};
 		camera.addLightSource(new PointLight(lpnt, 1, Color.WHITE));
-		c1 = new Cube(new double[] {100, 100, 800}, 200, Color.BLUE, false);
+		c1 = new Cube(new double[] {100, 100, 800}, 200, Color.BLUE, true);
 		c2 = new Cube(new double[] {100, 200, 400}, 100, Color.GREEN, true);
-		camera.addShape(c1);
-		camera.addShape(c2);
-		camera.addShape(new Cube(new double[] {100, 100, 750}, 50));
-		camera.addShape(new Cube(new double[] {100, 150, 750}, 50));
-		camera.addShape(new Cube(new double[] {100, 200, 750}, 50));
-		camera.addShape(new Cube(new double[] {100, 250, 750}, 50));
-		camera.addShape(new Pyramid(new double[] {-200, 100, 400}, 6, 100, 200));
+		//camera.addShape(c1);
+		//camera.addShape(c2);
+		camera.addShape(new Cube(new double[] {100, 100, 750}, 50, Color.BLUE, true));
+		camera.addShape(new Cube(new double[] {100, 150, 750}, 50, Color.BLUE, true));
+		camera.addShape(new Cube(new double[] {100, 200, 750}, 50, Color.BLUE, true));
+		camera.addShape(new Cube(new double[] {100, 250, 750}, 50, Color.BLUE, true));
+		camera.addShape(new Pyramid(new double[] {-200, 100, 400}, 6, 100, 200, 0, Color.BLUE, true));
 		//camera.addShape(new Sphere(new double[] {0, 0, 0}, 6, 100));
 		//camera.addShape(new Sphere(new double[] {-300, 0, 0}, 4, 100));
 		//camera.addShape(new Sphere(new double[] {-600, 0, 0}, 10, 100));
 		
-		sph = new Sphere(new double[] {200, 200, 900}, 25, 100);
+		sph = new Sphere(new double[] {200, 200, 900}, 5, 100, Color.BLUE, true);
 		camera.addShape(sph);
 		camera.addShape(new Pyramid(new double[] {200, 0, 900}, 4, Math.hypot(100, 100), 100, Math.PI/4, Color.MAGENTA, true));
 		add(camera);
@@ -145,8 +145,8 @@ public class Field extends JPanel implements Runnable {
 		//c2.rotate(0, Math.PI/400, 0);
 		//c2.rotate(Math.PI/400, 0, 0);
 		
-		sph.rotate(Math.PI/500, Math.PI/500, Math.PI/500);
-		System.out.println(Arrays.toString(lpnt));
+		//sph.rotate(Math.PI/500, Math.PI/500, Math.PI/500);
+		//System.out.println(Arrays.toString(lpnt));
 	}
 	
 	@Override

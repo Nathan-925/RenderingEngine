@@ -1,6 +1,6 @@
 package objects;
 
-import java.util.Arrays;
+import java.awt.Color;
 
 public class CoolShape2 extends Shape3D {
 
@@ -29,8 +29,8 @@ public class CoolShape2 extends Shape3D {
 		return edges;
 	}
 	
-	public CoolShape2(double[] point, int detail, double radius) {
-		super(generatePoints(point, detail, radius), generateEdges(detail));
+	public CoolShape2(double[] point, int detail, double radius, Color color) {
+		super(generatePoints(point, detail, radius), generateEdges(detail), color);
 	}
 	
 }
