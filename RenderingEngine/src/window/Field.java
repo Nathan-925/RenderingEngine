@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import objects.Camera;
 import objects.Cube;
 import objects.LightSource;
+import objects.PointLight;
 import objects.Pyramid;
 import util.PointUtils;
 
@@ -29,20 +30,7 @@ public class Field extends JPanel implements Runnable {
 		setBackground(Color.CYAN);
 		camera = new Camera();
 		lpnt = new double[] {0, 500, 400};
-		camera.addLightSource(new LightSource() {
-			@Override
-			public double[] getPosition() {
-				return lpnt; 
-			}
-			@Override
-			public double getIntensity() {
-				return 10000;
-			}
-			@Override
-			public Color getColor() {
-				return Color.WHITE;
-			}
-		});
+		camera.addLightSource(new PointLight(lpnt, 1, Color.WHITE));
 		c1 = new Cube(new double[] {100, 100, 800}, 200, Color.BLUE, false);
 		c2 = new Cube(new double[] {100, 200, 400}, 100, Color.GREEN, true);
 		camera.addShape(c1);

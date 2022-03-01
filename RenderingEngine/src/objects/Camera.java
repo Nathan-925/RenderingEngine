@@ -11,7 +11,9 @@ import java.util.Collection;
 
 import javax.swing.JPanel;
 
+import util.ColorUtils;
 import util.PointUtils;
+import util.VectorUtils;
 
 public class Camera extends JPanel {
 	
@@ -70,7 +72,6 @@ public class Camera extends JPanel {
 			double points[][] = shape.getPoints();
 			double planeDistance = getWidth()/(2*Math.tan(Math.toRadians(fov/2)));
 			
-			Color c = shape.getColor();
 			Faces:
 			for(int[] face: shape.getFaces()) {
 					double temp[][] = new double[face.length][3];
@@ -89,6 +90,10 @@ public class Camera extends JPanel {
 					int xArr[] = Arrays.stream(temp).mapToInt(n -> (int)(n[0]*(planeDistance/n[2]))).toArray();
 					int yArr[] = Arrays.stream(temp).mapToInt(n -> (int)(n[1]*(planeDistance/n[2]))).toArray();
 					
+					Color c = shape.getColor();
+					for(LightSource light: lights)
+						c = light.applyLight(center, VectorUtils.crossProduct(center, points[face[0]]), c);
+					g.setColor(c);
 					
 					if(xArr.length > 2)
 						g.fillPolygon(xArr, yArr, xArr.length);

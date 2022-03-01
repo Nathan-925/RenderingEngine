@@ -1,6 +1,10 @@
 package util;
 
 public class VectorUtils {
+	
+	public static double[] subtract(double[] vec1, double[] vec2) {
+		return new double[] {vec1[0]-vec2[0], vec1[1]-vec2[1], vec1[2]-vec2[2]};
+	}
 
 	public static double[] toUnitVector(double[] vec) {
 		double mag = Math.sqrt((vec[0]*vec[0])+(vec[1]*vec[1])+(vec[2]*vec[2]));
