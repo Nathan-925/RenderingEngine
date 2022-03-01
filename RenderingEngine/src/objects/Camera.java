@@ -11,11 +11,14 @@ import java.util.Collection;
 
 import javax.swing.JPanel;
 
+import util.ColorUtils;
 import util.PointUtils;
+import util.VectorUtils;
 
 public class Camera extends JPanel {
 	
 	private ArrayList<Shape3D> shapes;
+	private ArrayList<LightSource> lights;
 	private double[] point;
 	private double yaw, pitch, roll, fov;
 	
@@ -25,6 +28,7 @@ public class Camera extends JPanel {
 		setBackground(Color.WHITE);
 		
 		shapes = new ArrayList<>();
+		lights = new ArrayList<>();
 		this.point = point;
 		this.yaw = yaw;
 		this.pitch = pitch;
@@ -66,28 +70,35 @@ public class Camera extends JPanel {
 		for(Shape3D shape: shapes) {
 			
 			double points[][] = shape.getPoints();
-			double[] temp1 = new double[3],
-					 temp2 = new double[3];
 			double planeDistance = getWidth()/(2*Math.tan(Math.toRadians(fov/2)));
 			
-			g2.setColor(Color.BLACK);
-			for(int[] edge: shape.getEdges()) {
-					System.arraycopy(points[edge[0]], 0, temp1, 0, 3);
-					PointUtils.translate(temp1, -point[0], -point[1], -point[2]);
-					PointUtils.rotate(temp1, yaw, pitch, roll);
-					
-					System.arraycopy(points[edge[1]], 0, temp2, 0, 3);
-					PointUtils.translate(temp2, -point[0], -point[1], -point[2]);
-					PointUtils.rotate(temp2, yaw, pitch, roll);
-					
-					if(Math.min(temp1[2], temp2[2]) > 0) {
-						int p1x = (int)(temp1[0]*(planeDistance/temp1[2]));
-						int p1y = (int)(temp1[1]*(planeDistance/temp1[2]));
-						int p2x = (int)(temp2[0]*(planeDistance/temp2[2]));
-						int p2y = (int)(temp2[1]*(planeDistance/temp2[2]));
-						
-						g2.drawLine(p1x, p1y, p2x, p2y);
+			Faces:
+			for(int[] face: shape.getFaces()) {
+					double temp[][] = new double[face.length][3];
+					double center[] = new double[3];
+					for(int i = 0; i < temp.length; i++) {
+						for(int j = 0; j < 3; j++)
+							center[j] += points[face[i]][j];
+						System.arraycopy(points[face[i]], 0, temp[i], 0, 3);
+						PointUtils.translate(temp[i], -point[0], -point[1], -point[2]);
+						PointUtils.rotate(temp[i], yaw, pitch, roll);
+						if(temp[i][2] <= 0)
+							continue Faces;
 					}
+					for(int j = 0; j < 3; j++)
+						center[j] /= points.length;
+					int xArr[] = Arrays.stream(temp).mapToInt(n -> (int)(n[0]*(planeDistance/n[2]))).toArray();
+					int yArr[] = Arrays.stream(temp).mapToInt(n -> (int)(n[1]*(planeDistance/n[2]))).toArray();
+					
+					Color c = shape.getColor();
+					for(LightSource light: lights)
+						c = light.applyLight(center, VectorUtils.crossProduct(center, points[face[0]]), c);
+					g.setColor(c);
+					
+					if(xArr.length > 2)
+						g.fillPolygon(xArr, yArr, xArr.length);
+					else
+						g.drawLine(xArr[0], yArr[0], xArr[1], yArr[1]);
 			}
 		}
 	}
@@ -98,6 +109,10 @@ public class Camera extends JPanel {
 	
 	public void addShape(Shape3D shape) {
 		shapes.add(shape);
+	}
+	
+	public void addLightSource(LightSource light) {
+		lights.add(light);
 	}
 	
 	public void addShapes(Collection<Shape3D> shapes) {
