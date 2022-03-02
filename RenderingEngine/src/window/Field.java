@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -31,7 +32,7 @@ public class Field extends JPanel implements Runnable {
 		setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		setBackground(Color.CYAN);
 		camera = new Camera();
-		lpnt = new double[] {0, 100, 0};
+		lpnt = camera.getPosition();
 		camera.addLightSource(new PointLight(lpnt, 1, Color.WHITE));
 		c1 = new Cube(new double[] {100, 100, 800}, 200, Color.BLUE, true);
 		c2 = new Cube(new double[] {100, 200, 400}, 100, Color.GREEN, true);
@@ -46,10 +47,9 @@ public class Field extends JPanel implements Runnable {
 		//camera.addShape(new Sphere(new double[] {-300, 0, 0}, 4, 100));
 		//camera.addShape(new Sphere(new double[] {-600, 0, 0}, 10, 100));
 		
-		sph = new Sphere(new double[] {200, 200, 900}, 5, 100, Color.BLUE, true);
+		sph = new Sphere(new double[] {200, 200, 900}, 25, 100, Color.BLUE, true);
 		camera.addShape(sph);
-		camera.addShape(new Pyramid(new double[] {200, 0, 900}, 4, Math.hypot(100, 100), 100, Math.PI/4, Color.MAGENTA, true));
-		add(camera);
+		//camera.addShape(new Pyramid(new double[] {200, 0, 900}, 4, Math.hypot(100, 100), 100, Math.PI/4, Color.MAGENTA, true));
 		
 		keys = new HashMap<>();
 		addKeyListener(new KeyListener() {
@@ -153,7 +153,8 @@ public class Field extends JPanel implements Runnable {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		
+		BufferedImage cam = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
+		g.drawImage(camera.draw(cam), 0, 0, null);
 	}
 
 	@Override
