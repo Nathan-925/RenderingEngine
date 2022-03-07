@@ -10,10 +10,16 @@ public class ColorUtils {
 						 (int)(((float)c1.getBlue()*c2.getBlue())/255));
 	}
 	
-	public static Color multuply(Color c, double fac) {
+	public static Color multiply(Color c, double fac) {
 		return new Color((int)(c.getRed()*fac),
 						 (int)(c.getGreen()*fac),
 						 (int)(c.getBlue()*fac));
+	}
+	
+	public static Color multiply(Color c, double[] fac) {
+		return new Color((int)(c.getRed()*fac[0]),
+						 (int)(c.getGreen()*fac[1]),
+						 (int)(c.getBlue()*fac[2]));
 	}
 	
 }

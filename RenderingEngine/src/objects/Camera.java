@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
+import util.ColorUtils;
 import util.PointUtils;
 import util.VectorUtils;
 
@@ -74,19 +75,44 @@ public class Camera {
 							continue Faces;
 					}
 					for(int j = 0; j < 3; j++)
-						center[j] /= points.length;
+						center[j] /= face.length;
 					int xArr[] = Arrays.stream(temp).mapToInt(n -> (int)(n[0]*(planeDistance/n[2]))).toArray();
 					int yArr[] = Arrays.stream(temp).mapToInt(n -> (int)(n[1]*(planeDistance/n[2]))).toArray();
 					
-					Color c = shape.getColor();
-					for(LightSource light: lights)
-						c = light.applyLight(center, VectorUtils.crossProduct(VectorUtils.subtract(center, points[face[0]]), VectorUtils.subtract(center, points[face[1]])), c);
-					g2.setColor(c);
+					double norm[] = VectorUtils.crossProduct(VectorUtils.subtract(points[face[0]], center), VectorUtils.subtract(points[face[1]], center));
+					
+					double lightEffect[] = new double[3];
+					for(LightSource light: lights) {
+						double eff[] = light.getEffect(center, norm);
+						for(int i = 0; i < 3; i++)
+							lightEffect[i] += eff[i];
+					}
+					g2.setColor(ColorUtils.multiply(shape.getColor(), lightEffect));
 					
 					if(xArr.length > 2)
 						g2.fillPolygon(xArr, yArr, xArr.length);
 					else
 						g2.drawLine(xArr[0], yArr[0], xArr[1], yArr[1]);
+					
+					norm = VectorUtils.toUnitVector(norm);
+					for(int i = 0; i < 3; i++)
+						norm[i] *= 10;
+					
+					/*
+					double centerNorm[] = {center[0]+norm[0], center[1]+norm[1], center[2]+norm[2]};
+					PointUtils.translate(center, -point[0], -point[1], -point[2]);
+					PointUtils.rotate(center, yaw, pitch, roll);
+					PointUtils.translate(centerNorm, -point[0], -point[1], -point[2]);
+					PointUtils.rotate(centerNorm, yaw, pitch, roll);
+					if(Math.min(center[2], centerNorm[2]) > 0) {
+						g2.setColor(Color.WHITE);
+						int pnts[] = {(int)(center[0]*(planeDistance/center[2])),
+									  (int)(center[1]*(planeDistance/center[2])),
+									  (int)(centerNorm[0]*(planeDistance/centerNorm[2])),
+									  (int)(centerNorm[1]*(planeDistance/centerNorm[2]))};
+						g2.drawLine(pnts[0], pnts[1], pnts[2], pnts[3]);
+					}
+					*/
 			}
 		}
 		

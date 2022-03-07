@@ -15,10 +15,10 @@ public class PointLight extends LightSource{
 	}
 	
 	@Override
-	public Color applyLight(double[] point, double[] vec, Color polyColor) {
+	public double[] getEffect(double[] point, double[] vec) {
 		double lightVec[] = VectorUtils.subtract(this.point, point);
 		double effect = Math.max(0, intensity*VectorUtils.dotProduct(lightVec, vec)/(VectorUtils.magnitude(lightVec)*VectorUtils.magnitude(vec)));
-		return ColorUtils.multuply(polyColor, effect);
+		return new double[] {intensity*effect, intensity*effect, intensity*effect};
 	}
 
 }

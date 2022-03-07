@@ -12,7 +12,7 @@ public abstract class LightSource {
 		this.color = color;
 	}
 	
-	public abstract  Color applyLight(double[] point, double[] vec, Color polyColor);
+	public abstract double[] getEffect(double[] point, double[] vec);
 	
 	public double getIntensity() {
 		return intensity;

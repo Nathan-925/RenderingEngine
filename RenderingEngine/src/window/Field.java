@@ -7,14 +7,13 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
 import java.util.HashMap;
 
 import javax.swing.JPanel;
 
+import objects.AmbientLight;
 import objects.Camera;
 import objects.Cube;
-import objects.LightSource;
 import objects.PointLight;
 import objects.Pyramid;
 import objects.Sphere;
@@ -33,7 +32,8 @@ public class Field extends JPanel implements Runnable {
 		setBackground(Color.CYAN);
 		camera = new Camera();
 		lpnt = camera.getPosition();
-		camera.addLightSource(new PointLight(lpnt, 1, Color.WHITE));
+		camera.addLightSource(new PointLight(new double[] {500, -400, 0}, 0.7, Color.WHITE));
+		camera.addLightSource(new AmbientLight(0.3, Color.WHITE));
 		c1 = new Cube(new double[] {100, 100, 800}, 200, Color.BLUE, true);
 		c2 = new Cube(new double[] {100, 200, 400}, 100, Color.GREEN, true);
 		//camera.addShape(c1);
@@ -49,6 +49,7 @@ public class Field extends JPanel implements Runnable {
 		
 		sph = new Sphere(new double[] {200, 200, 900}, 25, 100, Color.BLUE, true);
 		camera.addShape(sph);
+		camera.addShape(new Sphere(new double[] {0, 0, 0}, 3, 100, new Color(100, 0, 200), true));
 		//camera.addShape(new Pyramid(new double[] {200, 0, 900}, 4, Math.hypot(100, 100), 100, Math.PI/4, Color.MAGENTA, true));
 		
 		keys = new HashMap<>();
