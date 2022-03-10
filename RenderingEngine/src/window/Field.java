@@ -6,14 +6,18 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 import javax.swing.JPanel;
 
+import objects.AmbientLight;
 import objects.Camera;
 import objects.Cube;
+import objects.PointLight;
 import objects.Pyramid;
 import objects.Sphere;
+import util.PointUtils;
 
 public class Field extends JPanel implements Runnable {
 
@@ -21,27 +25,31 @@ public class Field extends JPanel implements Runnable {
 	private HashMap<Integer, Boolean> keys;
 	Cube c1, c2;
 	Sphere sph;
+	double[] lpnt;
 	
 	public Field() {
 		setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 		setBackground(Color.CYAN);
 		camera = new Camera();
-		c1 = new Cube(new double[] {100, 100, 800}, 200);
-		c2 = new Cube(new double[] {100, 200, 400}, 100);
+		lpnt = camera.getPosition();
+		camera.addLightSource(new PointLight(lpnt, 0.7, Color.WHITE));
+		camera.addLightSource(new AmbientLight(0.3, Color.WHITE));
+		c1 = new Cube(new double[] {100, 100, 800}, 200, Color.BLUE, true);
+		c2 = new Cube(new double[] {100, 200, 400}, 100, Color.GREEN, true);
 		camera.addShape(c1);
 		camera.addShape(c2);
-		camera.addShape(new Cube(new double[] {100, 100, 750}, 50));
-		camera.addShape(new Cube(new double[] {100, 150, 750}, 50));
-		camera.addShape(new Cube(new double[] {100, 200, 750}, 50));
-		camera.addShape(new Cube(new double[] {100, 250, 750}, 50));
-		camera.addShape(new Pyramid(new double[] {-200, 100, 400}, 6, 100, 200));
-		//camera.addShape(new Sphere(new double[] {0, 0, 0}, 6, 100));
-		//camera.addShape(new Sphere(new double[] {-300, 0, 0}, 4, 100));
-		//camera.addShape(new Sphere(new double[] {-600, 0, 0}, 10, 100));
+		camera.addShape(new Cube(new double[] {100, 100, 750}, 50, Color.BLUE, true));
+		camera.addShape(new Cube(new double[] {100, 150, 750}, 50, Color.BLUE, true));
+		camera.addShape(new Cube(new double[] {100, 200, 750}, 50, Color.BLUE, true));
+		camera.addShape(new Cube(new double[] {100, 250, 750}, 50, Color.BLUE, true));
+		camera.addShape(new Pyramid(new double[] {-200, 100, 400}, 6, 100, 200, 0, Color.BLUE, true));
 		
-		sph = new Sphere(new double[] {200, 200, 900}, 25, 100);
+		sph = new Sphere(new double[] {200, 200, 900}, 25, 100, Color.RED, true);
 		camera.addShape(sph);
-		add(camera);
+		Sphere sph2 = new Sphere(new double[] {0, 0, 0}, 25, 100, new Color(100, 0, 200), true);
+		sph2.rotate(0, Math.PI/2, 0);
+		camera.addShape(sph2);
+		camera.addShape(new Pyramid(new double[] {200, 0, 900}, 4, Math.hypot(100, 100), 100, Math.PI/4, Color.MAGENTA, true));
 		
 		keys = new HashMap<>();
 		addKeyListener(new KeyListener() {
@@ -115,6 +123,18 @@ public class Field extends JPanel implements Runnable {
 					case KeyEvent.VK_P:
 						camera.setFOV(fov++);
 						break;
+					case KeyEvent.VK_I:
+						PointUtils.translate(lpnt, 0, -1, 0);
+						break;
+					case KeyEvent.VK_K:
+						PointUtils.translate(lpnt, 0, 1, 0);
+						break;
+					case KeyEvent.VK_J:
+						PointUtils.translate(lpnt, -1, 0, 0);
+						break;
+					case KeyEvent.VK_L:
+						PointUtils.translate(lpnt, 1, 0, 0);
+						break;
 				}
 		}
 		//c1.rotate(Math.PI/400, 0, 0);
@@ -125,14 +145,16 @@ public class Field extends JPanel implements Runnable {
 		//c2.rotate(0, Math.PI/400, 0);
 		//c2.rotate(Math.PI/400, 0, 0);
 		
-		sph.rotate(Math.PI/500, Math.PI/500, Math.PI/500);
+		//sph.rotate(Math.PI/500, Math.PI/500, Math.PI/500);
+		//System.out.println(Arrays.toString(lpnt));
 	}
 	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		
+		BufferedImage cam = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_4BYTE_ABGR);
+		g.drawImage(camera.draw(cam), 0, 0, null);
 	}
 
 	@Override
