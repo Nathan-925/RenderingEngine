@@ -9,11 +9,11 @@ public class Cube extends Shape3D {
 							  {point[0]+size, point[1], point[2]}, {point[0]+size, point[1], point[2]+size}, {point[0]+size, point[1]+size, point[2]}, {point[0]+size, point[1]+size, point[2]+size}},
 			  filled ?
 					  new int[][] {{0, 1, 3, 2},
-							 {0, 1, 5, 4},
-							 {1, 3, 7, 5},
-							 {3, 2, 6, 7},
-							 {2, 0, 4, 6},
-							 {4, 5, 7, 6}
+							 {1, 0, 4, 5},
+							 {3, 1, 5, 7},
+							 {2, 3, 7, 6},
+							 {0, 2, 6, 4},
+							 {5, 4, 6, 7}
 						   } :
 							   
 					 new int[][] {{0, 1}, {0, 2}, {0, 4},

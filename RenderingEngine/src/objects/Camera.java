@@ -81,6 +81,9 @@ public class Camera {
 					
 					double norm[] = VectorUtils.crossProduct(VectorUtils.subtract(points[face[0]], center), VectorUtils.subtract(points[face[1]], center));
 					
+					if(VectorUtils.dotProduct(norm, VectorUtils.subtract(point, center)) <= 0)
+						continue Faces;
+					
 					double lightEffect[] = new double[3];
 					for(LightSource light: lights) {
 						double eff[] = light.getEffect(center, norm);
@@ -93,10 +96,13 @@ public class Camera {
 						g2.fillPolygon(xArr, yArr, xArr.length);
 					else
 						g2.drawLine(xArr[0], yArr[0], xArr[1], yArr[1]);
+					//g2.setColor(Color.WHITE);
+					//g2.drawPolygon(xArr, yArr, xArr.length);
 					
 					norm = VectorUtils.toUnitVector(norm);
 					for(int i = 0; i < 3; i++)
 						norm[i] *= 10;
+					//System.out.println(Arrays.toString(face));
 					
 					/*
 					double centerNorm[] = {center[0]+norm[0], center[1]+norm[1], center[2]+norm[2]};

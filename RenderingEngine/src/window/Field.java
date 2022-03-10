@@ -32,25 +32,24 @@ public class Field extends JPanel implements Runnable {
 		setBackground(Color.CYAN);
 		camera = new Camera();
 		lpnt = camera.getPosition();
-		camera.addLightSource(new PointLight(new double[] {500, -400, 0}, 0.7, Color.WHITE));
+		camera.addLightSource(new PointLight(lpnt, 0.7, Color.WHITE));
 		camera.addLightSource(new AmbientLight(0.3, Color.WHITE));
 		c1 = new Cube(new double[] {100, 100, 800}, 200, Color.BLUE, true);
 		c2 = new Cube(new double[] {100, 200, 400}, 100, Color.GREEN, true);
-		//camera.addShape(c1);
-		//camera.addShape(c2);
+		camera.addShape(c1);
+		camera.addShape(c2);
 		camera.addShape(new Cube(new double[] {100, 100, 750}, 50, Color.BLUE, true));
 		camera.addShape(new Cube(new double[] {100, 150, 750}, 50, Color.BLUE, true));
 		camera.addShape(new Cube(new double[] {100, 200, 750}, 50, Color.BLUE, true));
 		camera.addShape(new Cube(new double[] {100, 250, 750}, 50, Color.BLUE, true));
 		camera.addShape(new Pyramid(new double[] {-200, 100, 400}, 6, 100, 200, 0, Color.BLUE, true));
-		//camera.addShape(new Sphere(new double[] {0, 0, 0}, 6, 100));
-		//camera.addShape(new Sphere(new double[] {-300, 0, 0}, 4, 100));
-		//camera.addShape(new Sphere(new double[] {-600, 0, 0}, 10, 100));
 		
-		sph = new Sphere(new double[] {200, 200, 900}, 25, 100, Color.BLUE, true);
+		sph = new Sphere(new double[] {200, 200, 900}, 25, 100, Color.RED, true);
 		camera.addShape(sph);
-		camera.addShape(new Sphere(new double[] {0, 0, 0}, 3, 100, new Color(100, 0, 200), true));
-		//camera.addShape(new Pyramid(new double[] {200, 0, 900}, 4, Math.hypot(100, 100), 100, Math.PI/4, Color.MAGENTA, true));
+		Sphere sph2 = new Sphere(new double[] {0, 0, 0}, 25, 100, new Color(100, 0, 200), true);
+		sph2.rotate(0, Math.PI/2, 0);
+		camera.addShape(sph2);
+		camera.addShape(new Pyramid(new double[] {200, 0, 900}, 4, Math.hypot(100, 100), 100, Math.PI/4, Color.MAGENTA, true));
 		
 		keys = new HashMap<>();
 		addKeyListener(new KeyListener() {
