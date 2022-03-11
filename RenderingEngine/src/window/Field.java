@@ -32,8 +32,9 @@ public class Field extends JPanel implements Runnable {
 		setBackground(Color.CYAN);
 		camera = new Camera();
 		lpnt = camera.getPosition();
-		camera.addLightSource(new PointLight(lpnt, 0.7, Color.WHITE));
-		camera.addLightSource(new AmbientLight(0.3, Color.WHITE));
+		camera.addLightSource(new PointLight(lpnt, 0.4, Color.WHITE));
+		camera.addLightSource(new PointLight(new double[] {400, -400, 100}, 0.4, Color.WHITE));
+		camera.addLightSource(new AmbientLight(0.2, Color.WHITE));
 		c1 = new Cube(new double[] {100, 100, 800}, 200, Color.BLUE, true);
 		c2 = new Cube(new double[] {100, 200, 400}, 100, Color.GREEN, true);
 		camera.addShape(c1);
@@ -47,7 +48,7 @@ public class Field extends JPanel implements Runnable {
 		sph = new Sphere(new double[] {200, 200, 900}, 25, 100, Color.RED, true);
 		camera.addShape(sph);
 		Sphere sph2 = new Sphere(new double[] {0, 0, 0}, 25, 100, new Color(100, 0, 200), true);
-		sph2.rotate(0, Math.PI/2, 0);
+		sph2.rotate(0, Math.PI/2, Math.PI/2);
 		camera.addShape(sph2);
 		camera.addShape(new Pyramid(new double[] {200, 0, 900}, 4, Math.hypot(100, 100), 100, Math.PI/4, Color.MAGENTA, true));
 		

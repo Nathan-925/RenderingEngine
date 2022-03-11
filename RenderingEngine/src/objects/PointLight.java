@@ -18,7 +18,7 @@ public class PointLight extends LightSource{
 	public double[] getEffect(double[] point, double[] vec) {
 		double lightVec[] = VectorUtils.subtract(this.point, point);
 		double effect = Math.max(0, intensity*VectorUtils.dotProduct(lightVec, vec)/(VectorUtils.magnitude(lightVec)*VectorUtils.magnitude(vec)));
-		return new double[] {intensity*effect, intensity*effect, intensity*effect};
+		return new double[] {effect, effect, effect};
 	}
 
 }
